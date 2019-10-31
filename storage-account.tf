@@ -15,7 +15,7 @@ module "storage_account" {
   common_tags  = "${local.tags}"
   team_contact = "${var.team_contact}"
   destroy_me   = "${var.destroy_me}"
-
+  managed_identity_object_id = "${var.managed_identity_object_id}"
   sa_subnets = ["${data.azurerm_subnet.ase.id}", "${data.azurerm_subnet.aks-01.id}", "${data.azurerm_subnet.aks-00.id}"]
 }
 
