@@ -37,6 +37,10 @@ variable "destroy_me" {
   default     = "No"
 }
 
+
 variable "managed_identity_object_id" {
   default = ""
 }
+
+variable "aks_infra_subscription_id" {}
+
