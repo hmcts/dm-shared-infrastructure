@@ -11,7 +11,7 @@ module "storage_account" {
   enable_blob_encryption    = true
   enable_file_encryption    = true
   enable_https_traffic_only = true
-
+  managed_identity_object_id = "${var.managed_identity_object_id}"
   // Tags
   common_tags  = "${local.tags}"
   team_contact = "${var.team_contact}"
