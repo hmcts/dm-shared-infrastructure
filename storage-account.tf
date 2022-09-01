@@ -29,6 +29,7 @@ resource "azurerm_key_vault_secret" "storageaccount_id" {
 
 
 provider "azurerm" {
+  features {}
   alias           = "aks-infra"
   subscription_id = "${var.aks_infra_subscription_id}"
 }
@@ -58,6 +59,3 @@ data "azurerm_subnet" "ase" {
   resource_group_name  = "${data.azurerm_virtual_network.ase_core_vnet.resource_group_name}"
 }
 
-output "storage_account_name" {
-  value = "${module.storage_account.storageaccount_name}"
-}
