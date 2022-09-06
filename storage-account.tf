@@ -17,7 +17,7 @@ module "storage_account" {
   destroy_me   = "${var.destroy_me}"
 
 
-  sa_subnets = var.env == "prod" ? concat([local.arm_aks_subnets, local.cft_aks_subnets]) : [local.arm_aks_subnets]
+  sa_subnets = var.env == "prod" ? [local.arm_aks_subnets, local.cft_aks_subnets] : [local.arm_aks_subnets]
 
 }
 
