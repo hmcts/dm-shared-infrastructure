@@ -16,7 +16,11 @@ module "storage_account" {
   team_contact = "${var.team_contact}"
   destroy_me   = "${var.destroy_me}"
 
-  sa_subnets = var.env == "prod" ? ["${data.azurerm_subnet.ase.id}", "${data.azurerm_subnet.aks-01.id}", "${data.azurerm_subnet.aks-00.id}", "${data.azurerm_subnet.cft-aks-00.id}", "${data.azurerm_subnet.cft-aks-01.id}"] : ["${data.azurerm_subnet.ase.id}", "${data.azurerm_subnet.aks-01.id}", "${data.azurerm_subnet.aks-00.id}"]
+
+  sa_subnets = concat(arm_aks_subnets, cft_aks_subnets)
+
+  arm_aks_subnets = ["${data.azurerm_subnet.ase.id}", "${data.azurerm_subnet.aks-01.id}", "${data.azurerm_subnet.aks-00.id}"]
+  cft_aks_subnets = var.env == "prod" ? ["${data.azurerm_subnet.cft-aks-00.id}", "${data.azurerm_subnet.cft-aks-01.id}"] : []
 
 }
 
@@ -56,9 +60,6 @@ data "azurerm_subnet" "aks-01" {
 }
 
 data "azurerm_virtual_network" "aks_cft_vnet" {
-  depends_on = [
-    var.env == "prod"
-  ]
   provider             = "azurerm.aks-infra"
   name                 = "cft-prod-vnet"
   resource_group_name  = "cft-prod-rg"
