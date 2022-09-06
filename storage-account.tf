@@ -16,9 +16,8 @@ module "storage_account" {
   team_contact = "${var.team_contact}"
   destroy_me   = "${var.destroy_me}"
 
-  sa_subnets = ["${data.azurerm_subnet.ase.id}", "${data.azurerm_subnet.aks-01.id}", "${data.azurerm_subnet.aks-00.id}"]
+  sa_subnets = var.env == "prod" ? ["${data.azurerm_subnet.ase.id}", "${data.azurerm_subnet.aks-01.id}", "${data.azurerm_subnet.aks-00.id}", "${data.azurerm_subnet.cft-aks-00.id}", "${data.azurerm_subnet.cft-aks-01.id}"] : ["${data.azurerm_subnet.ase.id}", "${data.azurerm_subnet.aks-01.id}", "${data.azurerm_subnet.aks-00.id}"]
 
-  cft_aks_subnets = var.env == "prod" ? ["${data.azurerm_subnet.cft-aks-00.id}", "${data.azurerm_subnet.cft-aks-01.id}"] : []
 }
 
 
