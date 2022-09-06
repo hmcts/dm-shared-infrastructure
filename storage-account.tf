@@ -16,7 +16,7 @@ module "storage_account" {
   team_contact = "${var.team_contact}"
   destroy_me   = "${var.destroy_me}"
 
-  sa_subnets = ["${data.azurerm_subnet.ase.id}", "${data.azurerm_subnet.aks-01.id}", "${data.azurerm_subnet.aks-00.id}"]
+  sa_subnets = ["${data.azurerm_subnet.ase.id}", "${data.azurerm_subnet.aks-01.id}", "${data.azurerm_subnet.aks-00.id}", "${data.azurerm_subnet.cft-aks-00.id}", "${data.azurerm_subnet.cft-aks-01.id}"]
 }
 
 
@@ -35,8 +35,8 @@ provider "azurerm" {
 
 data "azurerm_virtual_network" "aks_core_vnet" {
   provider             = "azurerm.aks-infra"
-  name                 = "cft-${var.env}-vnet"
-  resource_group_name  = "cft-${var.env}-rg"
+  name                 = "core-${var.env}-vnet"
+  resource_group_name  = "core-${var.env}-rg"
 }
 
 data "azurerm_subnet" "aks-00" {
@@ -51,6 +51,26 @@ data "azurerm_subnet" "aks-01" {
   name                 = "aks-01"
   virtual_network_name = "${data.azurerm_virtual_network.aks_core_vnet.name}"
   resource_group_name  = "${data.azurerm_virtual_network.aks_core_vnet.resource_group_name}"
+}
+
+data "azurerm_virtual_network" "aks_cft_vnet" {
+  provider             = "azurerm.aks-infra"
+  name                 = "cft-${var.env}-vnet"
+  resource_group_name  = "cft-${var.env}-rg"
+}
+
+data "azurerm_subnet" "cft-aks-00" {
+  provider             = "azurerm.aks-infra"
+  name                 = "aks-00"
+  virtual_network_name = "${data.azurerm_virtual_network.aks_cft_vnet.name}"
+  resource_group_name  = "${data.azurerm_virtual_network.aks_cft_vnet.resource_group_name}"
+}
+
+data "azurerm_subnet" "cft-aks-01" {
+  provider             = "azurerm.aks-infra"
+  name                 = "aks-01"
+  virtual_network_name = "${data.azurerm_virtual_network.aks_cft_vnet.name}"
+  resource_group_name  = "${data.azurerm_virtual_network.aks_cft_vnet.resource_group_name}"
 }
 
 data "azurerm_virtual_network" "ase_core_vnet" {
