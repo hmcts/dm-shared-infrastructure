@@ -57,9 +57,6 @@ data "azurerm_subnet" "aks-01" {
 }
 
 data "azurerm_virtual_network" "aks_cft_vnet" {
-  depends_on = [
-    var.env == "prod"
-  ]
   provider             = "azurerm.aks-infra"
   name                 = "cft-prod-vnet"
   resource_group_name  = "cft-prod-rg"
