@@ -57,10 +57,10 @@ data "azurerm_subnet" "aks-01" {
 }
 
 data "azurerm_virtual_network" "aks_cft_vnet" {
-  for_each = var.env == "prod" ? [1] : []
+  for_each             = var.env == "prod" ? [1] : []
   provider             = "azurerm.aks-infra"
-  name                 = var.env == "prod" ? ["cft-prod-vnet"] : []
-  resource_group_name  = var.env == "prod" ? ["cft-prod-rg"] : []
+  name                 = "cft-prod-vnet"
+  resource_group_name  = "cft-prod-rg"
 }
 
 data "azurerm_subnet" "cft-aks-00" {
