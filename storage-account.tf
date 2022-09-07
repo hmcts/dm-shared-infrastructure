@@ -66,15 +66,15 @@ data "azurerm_virtual_network" "aks_cft_vnet" {
 data "azurerm_subnet" "cft-aks-00" {
   provider             = "azurerm.aks-infra"
   name                 = "aks-00"
-  virtual_network_name = "${data.azurerm_virtual_network.aks_cft_vnet.name}"
-  resource_group_name  = "${data.azurerm_virtual_network.aks_cft_vnet.resource_group_name}"
+  virtual_network_name = "${data.azurerm_virtual_network.aks_cft_vnet[0].name}"
+  resource_group_name  = "${data.azurerm_virtual_network.aks_cft_vnet[0].resource_group_name}"
 }
 
 data "azurerm_subnet" "cft-aks-01" {
   provider             = "azurerm.aks-infra"
   name                 = "aks-01"
-  virtual_network_name = "${data.azurerm_virtual_network.aks_cft_vnet.name}"
-  resource_group_name  = "${data.azurerm_virtual_network.aks_cft_vnet.resource_group_name}"
+  virtual_network_name = "${data.azurerm_virtual_network.aks_cft_vnet[0].name}"
+  resource_group_name  = "${data.azurerm_virtual_network.aks_cft_vnet[0].resource_group_name}"
 }
 
 data "azurerm_virtual_network" "ase_core_vnet" {
