@@ -19,43 +19,8 @@
 #  sa_subnets = ["${data.azurerm_subnet.ase.id}", "${data.azurerm_subnet.aks-01.id}", "${data.azurerm_subnet.aks-00.id}"]
 #}
 
-
-// Storage Account Vault Secrets
-resource "azurerm_key_vault_secret" "storageaccount_id" {
-  name      = "storage-account-id"
-  value     = "${module.storage_account.storageaccount_id}"
-  key_vault_id = "${module.shared_vault.key_vault_id}"
-}
-
-
 provider "azurerm" {
   features {}
   alias           = "aks-infra"
   subscription_id = "${var.aks_infra_subscription_id}"
 }
-
-data "azurerm_subnet" "aks-00" {
-  provider             = "azurerm.aks-infra"
-  name                 = "aks-00"
-  virtual_network_name = "${data.azurerm_virtual_network.aks_core_vnet.name}"
-  resource_group_name  = "${data.azurerm_virtual_network.aks_core_vnet.resource_group_name}"
-}
-
-data "azurerm_subnet" "aks-01" {
-  provider             = "azurerm.aks-infra"
-  name                 = "aks-01"
-  virtual_network_name = "${data.azurerm_virtual_network.aks_core_vnet.name}"
-  resource_group_name  = "${data.azurerm_virtual_network.aks_core_vnet.resource_group_name}"
-}
-
-data "azurerm_virtual_network" "ase_core_vnet" {
-  name                 = "core-infra-vnet-${var.env}"
-  resource_group_name  = "core-infra-${var.env}"
-}
-
-data "azurerm_subnet" "ase" {
-  name                 = "core-infra-subnet-3-${var.env}"
-  virtual_network_name = "${data.azurerm_virtual_network.ase_core_vnet.name}"
-  resource_group_name  = "${data.azurerm_virtual_network.ase_core_vnet.resource_group_name}"
-}
-
