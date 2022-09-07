@@ -57,6 +57,7 @@ data "azurerm_subnet" "aks-01" {
 }
 
 data "azurerm_virtual_network" "aks_cft_vnet" {
+  count                = var.env == "prod" ? 1 : 0
   provider             = "azurerm.aks-infra"
   name                 = "cft-prod-vnet"
   resource_group_name  = "cft-prod-rg"
@@ -66,16 +67,16 @@ data "azurerm_subnet" "cft-aks-00" {
   count                = var.env == "prod" ? 1 : 0
   provider             = "azurerm.aks-infra"
   name                 = "aks-00"
-  virtual_network_name = "${data.azurerm_virtual_network.aks_cft_vnet.name}"
-  resource_group_name  = "${data.azurerm_virtual_network.aks_cft_vnet.resource_group_name}"
+  virtual_network_name = "${data.azurerm_virtual_network.aks_cft_vnet[0].name}"
+  resource_group_name  = "${data.azurerm_virtual_network.aks_cft_vnet[0].resource_group_name}"
 }
 
 data "azurerm_subnet" "cft-aks-01" {
   count                = var.env == "prod" ? 1 : 0
   provider             = "azurerm.aks-infra"
   name                 = "aks-01"
-  virtual_network_name = "${data.azurerm_virtual_network.aks_cft_vnet.name}"
-  resource_group_name  = "${data.azurerm_virtual_network.aks_cft_vnet.resource_group_name}"
+  virtual_network_name = "${data.azurerm_virtual_network.aks_cft_vnet[0].name}"
+  resource_group_name  = "${data.azurerm_virtual_network.aks_cft_vnet[0].resource_group_name}"
 }
 
 data "azurerm_virtual_network" "ase_core_vnet" {
