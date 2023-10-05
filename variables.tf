@@ -28,7 +28,3 @@ variable destroy_me {
 }
 
 variable aks_infra_subscription_id {}
-
-variable managed_identity_object_id {
-  default = ""
-}
