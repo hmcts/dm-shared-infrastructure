@@ -28,3 +28,8 @@ variable "destroy_me" {
 }
 
 variable "aks_infra_subscription_id" {}
+
+variable "email_address" {
+  type = string
+  description= "Monitoring notification email address"
+}
