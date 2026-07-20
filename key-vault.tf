@@ -4,7 +4,7 @@ data "azurerm_user_assigned_identity" "jenkins" {
 }
 
 module "shared_vault" {
-  source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=master"
+  source                  = "git@github.com:hmcts/cnp-module-key-vault?ref=DTSPO-31965/remove-jenkins-ptl-access"
   name                    = "dm-${var.env}"
   product                 = var.product
   env                     = var.env
@@ -15,6 +15,7 @@ module "shared_vault" {
   product_group_object_id = "be8b3850-998a-4a66-8578-da268b8abd6b"
   create_managed_identity = true
   common_tags             = local.tags
+  grant_preview_jenkins_access = var.env == "aat"
 }
 
 output "vaultName" {
